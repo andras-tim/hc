@@ -1,0 +1,44 @@
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 10px;
+}
+
+.results {
+    padding: 20px;
+}
+
+/* Remove extra left and right margins, due to padding in columns */
+.row {
+    margin: 0 -5px;
+    padding-left: 30px;
+}
+
+.row:after {
+    content: "";
+    display: table;
+    clear: both;
+}
+
+/* Style the counter cards */
+.card {
+    margin: 16px;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.4);
+    transition: 0.1s;
+    width: auto;
+    height: 250px;
+    float: left;
+}
+
+.card img {
+    height: 100%;
+    width: auto;
+}
+
+/* On mouse-over, add a deeper shadow */
+.card:hover {
+    box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.8);
+    transform: scale(1.8);
+}

@@ -1,0 +1,43 @@
+<!doctype html>
+<html data-ng-app="hcApp" lang="en">
+<head>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>Spotify HealthCheck</title>
+    <link rel="stylesheet" href="hc.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.7.9/angular.min.js"></script>
+    <script src="hc.js"></script>
+</head>
+<body>
+    <h2>Users</h2>
+    <div data-ng-controller="HcController">
+        <ul class="unstyled">
+            <li data-ng-repeat="user in users | orderBy:'name'">
+                {{user.name}}
+                <button type="button" data-ng-click="removeUser(user)">del</button>
+            </li>
+        </ul>
+        <form data-ng-submit="addUser()">
+            <label for="new-user-textbox">
+                <input id="new-user-textbox" type="text" data-ng-model="userText" size="30" placeholder="username">
+                <input class="btn-primary" type="submit" value="add">
+                <span data-ng-if="warn">{{ warn }}</span>
+            </label>
+        </form>
+        <br>
+        <button data-ng-if="users.length >= 2" type="button" data-ng-click="randomize()">show randomized cards</button>
+        <hr>
+        <div class="results">
+            <div data-ng-repeat="result in results">
+                <h3>{{result.user}}</h3>
+                <!--<li data-ng-repeat="result in results | orderBy:'user'">-->
+                <div class="row">
+                    <div data-ng-repeat="card in result.cards" class="card">
+                        <img data-ng-src="img/{{ card }}" alt="card">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
