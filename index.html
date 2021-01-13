@@ -1,17 +1,25 @@
 <!doctype html>
-<html data-ng-app="hcApp" lang="en">
+<html data-ng-app="hcApp" data-ng-controller="HcController" lang="en">
 <head>
     <meta charset="utf-8"/>
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <title>Squad Health Check 1.0 (Spotify)</title>
+    <title>Health Check v{{ selectedVersion }}</title>
     <link rel="stylesheet" href="hc.css">
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.7.9/angular.min.js"></script>
     <script src="hc.js"></script>
 </head>
 <body>
-    <h2>Squad Health Check v1.0</h2>
+    <h2>Spotify's Squad Health Check</h2>
+    <div>
+        <label data-ng-repeat="(version, details) in versions">
+            <input name="version" type="radio" data-ng-model="$parent.selectedVersion" data-ng-value="version">
+            v{{ version }} <i>(<a data-ng-href="{{ details.infoUrl }}" target="_blank">info</a>)</i>
+            <br/>
+        </label>
+    </div>
+
     <h3>Users</h3>
-    <div data-ng-controller="HcController">
+    <div>
         <ul class="unstyled">
             <li data-ng-repeat="user in users | orderBy:'name'">
                 {{user.name}}
@@ -26,16 +34,16 @@
             </label>
         </form>
         <br>
-        <button data-ng-if="users.length >= 2" type="button" data-ng-click="randomize()">show randomized cards</button>
-        <hr>
-        <div class="results">
-            <div data-ng-repeat="result in results">
-                <h3>{{result.user}}</h3>
-                <!--<li data-ng-repeat="result in results | orderBy:'user'">-->
-                <div class="row">
-                    <div data-ng-repeat="card in result.cards" class="card">
-                        <img data-ng-src="img/{{ card }}" alt="card">
-                    </div>
+        <button data-ng-if="users.length >= 2" type="button" data-ng-click="createRandomizedResults()">show randomized cards</button>
+    </div>
+    <hr>
+    <div class="results">
+        <div data-ng-repeat="result in results">
+            <h3>{{result.user}}</h3>
+            <!--<li data-ng-repeat="result in results | orderBy:'user'">-->
+            <div class="row">
+                <div data-ng-repeat="card in result.cards" class="card">
+                    <img data-ng-src="{{ card }}" alt="card">
                 </div>
             </div>
         </div>
