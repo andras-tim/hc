@@ -10,6 +10,11 @@ angular.module('hcApp', []).controller('HcController', [
                 'path'          : 'img/1_0/',
                 'cardCount'     : 11,
             },
+            '1.1': {
+                'infoUrl'       : 'https://agilelogbook.com/2020/03/11/updated-spotify-squad-health-check/',
+                'path'          : 'img/1_1/',
+                'cardCount'     : 15,
+            },
         }
         availableVersions = Object.getOwnPropertyNames($scope.versions);
 
