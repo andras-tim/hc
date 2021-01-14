@@ -27,7 +27,7 @@ angular.module('hcApp', []).controller('HcController', [
 
         $scope.addUser = addUser;
         $scope.removeUser = removeUser;
-        $scope.createRandomizedResults = createRandomizedResults;
+        $scope.closeUsersAndGenerateRandomizedCards = closeUsersAndGenerateRandomizedCards;
 
         $scope.$watch('selectedVersion', onUpdatedVersion);
 
@@ -111,8 +111,8 @@ angular.module('hcApp', []).controller('HcController', [
             $scope.userText = '';
             jumpToInput();
 
-            updateSearchString();
             $scope.results = [];
+            updateSearchString();
         }
 
         function removeUser (item) {
@@ -120,11 +120,11 @@ angular.module('hcApp', []).controller('HcController', [
             $scope.users.splice(index, 1);
             jumpToInput();
 
-            updateSearchString();
             $scope.results = [];
+            updateSearchString();
         }
 
-        function createRandomizedResults() {
+        function closeUsersAndGenerateRandomizedCards()
             closeUsers();
 
             var cardNames = [],
