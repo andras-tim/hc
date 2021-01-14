@@ -73,11 +73,11 @@ angular.module('hcApp', []).controller('HcController', [
                 return;
             }
 
-            rawVersion = $location.search()['v']
-            rawUsernames = $location.search()['u']
+            rawVersion = $location.search()['v'];
+            rawUsernames = $location.search()['u'];
 
             if (rawVersion in $scope.versions) {
-                $scope.selectedVersion = rawVersion
+                $scope.selectedVersion = rawVersion;
             }
             if (rawUsernames) {
                 usernames = rawUsernames.split(nameSplitter);
@@ -93,7 +93,7 @@ angular.module('hcApp', []).controller('HcController', [
             $scope.userText = $scope.userText.replace(nameSplitter, '_');
 
             if ($scope.userText === '') {
-                $scope.warn = 'username have to be non empty!';
+                $scope.warn = 'username has to be not empty!';
                 jumpToInput();
                 return;
             }
