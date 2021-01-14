@@ -14,7 +14,7 @@
     <div class="content">
         <div class="form-check form-check-inline" data-ng-repeat="(version, details) in versions">
             <label class="form-check-label">
-                <input name="version" type="radio" class="form-check-input" data-ng-model="$parent.selectedVersion" data-ng-click="onChangeVersion()" data-ng-value="version">
+                <input name="version" type="radio" class="form-check-input" data-ng-model="$parent.selectedVersion" data-ng-click="onChangeVersion(version)" data-ng-value="version">
                 v{{ version }} <i>(<a data-ng-href="{{ details.infoUrl }}" target="_blank">info</a>)</i>
                 <br/>
             </label>

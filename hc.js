@@ -181,9 +181,8 @@ angular.module('hcApp', []).controller('HcController', [
             updateSearchString();
         }
 
-        function onChangeVersion() {
-            $scope.$applyAsync();
-
+        function onChangeVersion(newVersion) {
+            $scope.selectedVersion = newVersion;
             $scope.results = [];
             updateSearchString();
         }
