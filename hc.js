@@ -22,14 +22,14 @@ angular.module('hcApp', []).controller('HcController', [
         $scope.users = [];
         $scope.results = [];
         $scope.warn = '';
+        $scope.userCollapsed = false;
 
         parseFromSearchString();
 
         $scope.addUser = addUser;
         $scope.removeUser = removeUser;
         $scope.closeUsersAndGenerateRandomizedCards = closeUsersAndGenerateRandomizedCards;
-
-        $scope.$watch('selectedVersion', onUpdatedVersion);
+        $scope.onChangeVersion = onChangeVersion;
 
         function jumpToInput () {
             var input = $window.document.getElementById('new-user-textbox');
@@ -61,12 +61,14 @@ angular.module('hcApp', []).controller('HcController', [
 
             $location.search('v', $scope.selectedVersion);
             $location.search('u', result.join(nameSplitter));
+            $location.search('c', $scope.results.length > 0 ? 1 : 0);
         }
 
         function parseFromSearchString () {
             var search = $location.search(),
                 rawVersion,
                 rawUsernames,
+                rawShowCards,
                 usernames;
 
             if (!search) {
@@ -75,6 +77,7 @@ angular.module('hcApp', []).controller('HcController', [
 
             rawVersion = $location.search()['v'];
             rawUsernames = $location.search()['u'];
+            rawShowCards = $location.search()['c'];
 
             if (rawVersion in $scope.versions) {
                 $scope.selectedVersion = rawVersion;
@@ -86,6 +89,10 @@ angular.module('hcApp', []).controller('HcController', [
                 for (var i = 0; i < usernames.length; i++) {
                     $scope.users.push({name: usernames[i]});
                 }
+            }
+            if (rawShowCards === '1') {
+                $scope.userCollapsed = true;
+                generateRandomizedResults();
             }
         }
 
@@ -125,8 +132,12 @@ angular.module('hcApp', []).controller('HcController', [
         }
 
         function closeUsersAndGenerateRandomizedCards()
+        {
             closeUsers();
+            generateRandomizedResults();
+        }
 
+        function generateRandomizedResults() {
             var cardNames = [],
                 users = [...$scope.users],
                 versionDetails,
@@ -166,10 +177,13 @@ angular.module('hcApp', []).controller('HcController', [
                     cards: cards,
                 });
             });
+
+            updateSearchString();
         }
 
-        function onUpdatedVersion()
-        {
+        function onChangeVersion() {
+            $scope.$applyAsync();
+
             $scope.results = [];
             updateSearchString();
         }

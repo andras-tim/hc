@@ -14,7 +14,7 @@
     <div class="content">
         <div class="form-check form-check-inline" data-ng-repeat="(version, details) in versions">
             <label class="form-check-label">
-                <input name="version" type="radio" class="form-check-input" data-ng-model="$parent.selectedVersion" data-ng-value="version">
+                <input name="version" type="radio" class="form-check-input" data-ng-model="$parent.selectedVersion" data-ng-click="onChangeVersion()" data-ng-value="version">
                 v{{ version }} <i>(<a data-ng-href="{{ details.infoUrl }}" target="_blank">info</a>)</i>
                 <br/>
             </label>
@@ -24,11 +24,11 @@
     <div id="usersAccordion" class="accordion col-md-6">
         <div class="accordion-item">
             <h2 class="accordion-header">
-                <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseUsers" aria-expanded="true" aria-controls="collapseUsers">
+                <button data-ng-class="['accordion-button', {'collapsed': userCollapsed}]" type="button" data-bs-toggle="collapse" data-bs-target="#collapseUsers" aria-expanded="true" aria-controls="collapseUsers">
                     Users
                 </button>
             </h2>
-            <div id="collapseUsers" class="accordion-collapse collapse show content">
+            <div id="collapseUsers" data-ng-class="['accordion-collapse', 'collapse', 'content', {'show': !userCollapsed}]">
                 <ul>
                     <li data-ng-repeat="user in users | orderBy:'name'">
                         {{user.name}}
