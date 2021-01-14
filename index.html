@@ -3,50 +3,71 @@
 <head>
     <meta charset="utf-8"/>
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <title>Health Check v{{ selectedVersion }}</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-giJF6kkoqNQ00vy+HMDP7azOuL0xtbfIcaT9wjKHr8RbDVddVHyTfAAsrekwKmP1" crossorigin="anonymous">
     <link rel="stylesheet" href="hc.css">
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.7.9/angular.min.js"></script>
     <script src="hc.js"></script>
+    <title>Health Check v{{ selectedVersion }}</title>
 </head>
 <body>
     <h2>Spotify's Squad Health Check</h2>
-    <div>
-        <label data-ng-repeat="(version, details) in versions">
-            <input name="version" type="radio" data-ng-model="$parent.selectedVersion" data-ng-value="version">
-            v{{ version }} <i>(<a data-ng-href="{{ details.infoUrl }}" target="_blank">info</a>)</i>
-            <br/>
-        </label>
+    <div class="content">
+        <div class="form-check form-check-inline" data-ng-repeat="(version, details) in versions">
+            <label class="form-check-label">
+                <input name="version" type="radio" class="form-check-input" data-ng-model="$parent.selectedVersion" data-ng-value="version">
+                v{{ version }} <i>(<a data-ng-href="{{ details.infoUrl }}" target="_blank">info</a>)</i>
+                <br/>
+            </label>
+        </div>
     </div>
 
-    <h3>Users</h3>
-    <div>
-        <ul class="unstyled">
-            <li data-ng-repeat="user in users | orderBy:'name'">
-                {{user.name}}
-                <button type="button" data-ng-click="removeUser(user)">del</button>
-            </li>
-        </ul>
-        <form data-ng-submit="addUser()">
-            <label for="new-user-textbox">
-                <input id="new-user-textbox" type="text" data-ng-model="userText" size="30" placeholder="username">
-                <input class="btn-primary" type="submit" value="add">
-                <span data-ng-if="warn">{{ warn }}</span>
-            </label>
-        </form>
-        <br>
-        <button data-ng-if="users.length >= 2" type="button" data-ng-click="createRandomizedResults()">show randomized cards</button>
+    <div id="usersAccordion" class="accordion col-md-6">
+        <div class="accordion-item">
+            <h2 class="accordion-header">
+                <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseUsers" aria-expanded="true" aria-controls="collapseUsers">
+                    Users
+                </button>
+            </h2>
+            <div id="collapseUsers" class="accordion-collapse collapse show content">
+                <ul>
+                    <li data-ng-repeat="user in users | orderBy:'name'">
+                        {{user.name}}
+                        <button type="button" class="btn btn-outline-danger btn-sm" data-ng-click="removeUser(user)">del</button>
+                    </li>
+                </ul>
+
+                <form class="row" data-ng-submit="addUser()">
+                    <div class="col-auto form-floating">
+                        <input id="new-user-textbox" type="text" data-ng-class="['form-control', {'is-invalid': warn}]" placeholder="New username" data-ng-model="userText">
+                        <label for="new-user-textbox">New username</label>
+                        <div class="invalid-feedback">{{ warn }}</div>
+                    </div>
+                    <div class="col-auto">
+                        <input class="btn btn-outline-primary position-relative top-50 start-50 translate-middle" type="submit" value="add">
+                    </div>
+                </form>
+            </div>
+        </div>
     </div>
-    <hr>
-    <div class="results">
+
+    <div data-ng-if="users.length >= 2">
+        <br>
+        <button class="btn btn-outline-success" type="button" data-ng-click="createRandomizedResults()">show randomized cards</button>
+    </div>
+
+    <hr data-ng-if="result.cards.length >= 1">
+
+    <div class="content">
         <div data-ng-repeat="result in results">
             <h3>{{result.user}}</h3>
-            <!--<li data-ng-repeat="result in results | orderBy:'user'">-->
-            <div class="row">
+            <div class="card-row">
                 <div data-ng-repeat="card in result.cards" class="card">
                     <img data-ng-src="{{ card }}" alt="card">
                 </div>
             </div>
         </div>
     </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.bundle.min.js" integrity="sha384-ygbV9kiqUc6oa4msXn9868pTtWMgiQaeYH7/t7LECLbyPA2x65Kgf80OJFdroafW" crossorigin="anonymous"></script>
 </body>
 </html>

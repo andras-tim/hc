@@ -125,6 +125,8 @@ angular.module('hcApp', []).controller('HcController', [
         }
 
         function createRandomizedResults() {
+            closeUsers();
+
             var cardNames = [],
                 users = [...$scope.users],
                 versionDetails,
@@ -170,6 +172,12 @@ angular.module('hcApp', []).controller('HcController', [
         {
             $scope.results = [];
             updateSearchString();
+        }
+
+        function closeUsers() {
+            var collapseUsers = document.getElementById('collapseUsers');
+
+            new bootstrap.Collapse(collapseUsers, {toggle: false}).hide();
         }
     }
 ]);
